@@ -7,6 +7,8 @@ let profileLastProjectOutput = document.getElementsByClassName("profileLastProje
 let profileTotalXpData = 0
 let profileTotalXpOutput = document.getElementsByClassName("profileTotalXp")
 let profileAverageGradeOutput = document.getElementsByClassName("profileAverageGrade")
+let barWidth = 0
+let barHeight = 0
 
 
 function showProfileData() {
@@ -135,6 +137,27 @@ function showTransactionData() {
         console.log(data)
         data.data.transaction.forEach(item => {
             profileTotalXpData += item.amount
+            let barChart = document.getElementById("barChart")
+            let bar = document.createElement("g")
+            bar.className = "bar" 
+            let rect = document.createElement("rect")
+            rect.setAttribute("width", (item.amount).toFixed(1)/1000)
+            
+            rect.setAttribute("height", 19)
+            rect.setAttribute("y", barHeight)
+            
+            let text = document.createElement("text")
+            text.setAttribute("x", (item.amount).toFixed(1)/1000 + 5 )
+            text.setAttribute("y", barHeight + 19/2)
+            text.setAttribute("dy", ".35em")
+            text.textContent = item.object.name
+            barHeight += 20
+            barWidth.toFixed(1)
+            bar.append(rect)
+            bar.append(text)
+            barChart.append(bar)
+
+
         })
 
         profileTotalXpOutput[0].textContent += profileTotalXpData   
