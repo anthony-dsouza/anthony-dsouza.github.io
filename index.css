@@ -1,0 +1,32 @@
+body {
+   background-color: whitesmoke; 
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.profile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+.profile div {
+    background-color: azure;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    max-height: 210px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    min-width: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.profile div h2 {
+   text-align: center;
+}

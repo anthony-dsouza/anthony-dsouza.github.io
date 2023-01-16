@@ -94,8 +94,9 @@ function showProgressData() {
             let pGrade = document.createElement("p")
             pGrade.textContent = item.grade.toFixed(2)
             div.append(h3Name)
-            div.append(pCreatedAt)
             div.append(pGrade)
+            div.append(pCreatedAt)
+            
             profileCompletedProjects.append(div)
         })
 
