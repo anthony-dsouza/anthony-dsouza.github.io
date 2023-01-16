@@ -1,3 +1,5 @@
+let profileLoginData
+let profileLoginOutput = document.getElementsByClassName("profileLogin")
 function showProfileData() {
     const query = `
         query {
@@ -20,6 +22,10 @@ function showProfileData() {
     }).then(response => {
         return response.json();
     }).then(data => {
-        console.log(data);
+        console.log(data)
+        profileLoginData = data.data.user[0].login;
+        profileLoginOutput[0].textContent = profileLoginData;
     });
 }
+
+showProfileData()
