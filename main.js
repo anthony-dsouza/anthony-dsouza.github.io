@@ -118,7 +118,7 @@ function showTransactionData() {
         query {
             transaction(
                 where: {_and: [{user: {id: {_eq: "125"}}}, {object: {type: {_eq: "project"}}}, {type: {_eq: "xp"}}]}
-                order_by: {createdAt: desc}
+                order_by: {createdAt: asc}
             ) {
                 amount
                 object {
@@ -176,23 +176,32 @@ function showTransactionData() {
             // circle data point
             let point = document.createElementNS('http://www.w3.org/2000/svg', "circle")
             let text1 = document.createElementNS('http://www.w3.org/2000/svg', "text")
+            let text2 = document.createElementNS('http://www.w3.org/2000/svg', "text")
             text1.setAttribute("dy", ".35em")
             text1.setAttribute("x", "10" )
             text1.setAttribute("y", "10")
             text1.style.display = "none"
-            text1.textContent = profileTotalXpData/1000 + "kb " + item.object.name
+            text1.textContent = profileTotalXpData/1000 + "kb " + item.object.name 
+            text2.setAttribute("dy", ".35em")
+            text2.setAttribute("x", "10" )
+            text2.setAttribute("y", "35")
+            text2.style.display = "none"
+            text2.textContent = item.createdAt
             point.setAttribute("cx", (time/(1000*60*60*24*7)-2703)*6)
-            point.setAttribute("cy", (profileTotalXpData/1000)/2)
+            point.setAttribute("cy", (320 - (profileTotalXpData/1000)/2))
             point.setAttribute("r", 4)
             point.onmouseover = function() {
                 text1.style.display = "block"
+                text2.style.display = "block"
             }
             point.onmouseleave = function() {
                 text1.style.display = "none"
+                text2.style.display = "none"
             }
             circle.append(point)
             circle.append(text1)
-            points += (time/(1000*60*60*24*7)-2703)*6 + ", " + (profileTotalXpData/1000)/2 + " "
+            circle.append(text2)
+            points += (time/(1000*60*60*24*7)-2703)*6 + ", " + (320 - (profileTotalXpData/1000)/2) + " "
         })
         // appending points attribute to ployfill
         lineChart.setAttribute("points", points)
