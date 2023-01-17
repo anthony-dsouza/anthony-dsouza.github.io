@@ -33,7 +33,7 @@ function showProfileData() {
     }).then(response => {
         return response.json();
     }).then(data => {
-        console.log(data)
+        // login and id data sent to html
         profileLoginData = data.data.user[0].login;
         profileLoginOutput[0].textContent += profileLoginData;
         profileIdData = data.data.user[0].id;
@@ -72,10 +72,11 @@ function showProgressData() {
     }).then(response => {
         return response.json();
     }).then(data => {
-        console.log(data)
+
+        // displays last project
         profileLastProjectData = data.data.progress[0].object.name
         profileLastProjectOutput[0].textContent += profileLastProjectData
-
+        //calculates and displays average grade
         let noOfRecords = data.data.progress.length
         let gradesTotal = 0
         data.data.progress.forEach(item => {
@@ -84,6 +85,9 @@ function showProgressData() {
         profileAverageGradeOutput[0].textContent += String((gradesTotal/noOfRecords).toFixed(2))
         let profileCompletedProjects = document.getElementById("completedProjects")
         data.data.progress.forEach(item => {
+
+            //displays project completed section of profile
+
             let div = document.createElement("div")
             let h3Name = document.createElement("h3")
             h3Name.textContent = item.object.name
@@ -92,9 +96,9 @@ function showProgressData() {
             let day = date.getDate()
             let month = date.getMonth() + 1
             let year = date.getFullYear()
-            pCreatedAt.textContent = day + "/" + month + "/" + year
+            pCreatedAt.textContent = "Created " + day + "/" + month + "/" + year
             let pGrade = document.createElement("p")
-            pGrade.textContent = item.grade.toFixed(2)
+            pGrade.textContent = "Grade " + item.grade.toFixed(2)
             div.append(h3Name)
             div.append(pGrade)
             div.append(pCreatedAt)
@@ -134,32 +138,33 @@ function showTransactionData() {
     }).then(response => {
         return response.json();
     }).then(data => {
-        console.log(data)
+        // bar chart data showing amount of xp per project
         data.data.transaction.forEach(item => {
+
+            //used to find out total XP
             profileTotalXpData += item.amount
+
             let barChart = document.getElementById("barChart")
-            let bar = document.createElement("g")
-            bar.className = "bar" 
-            let rect = document.createElement("rect")
+            let bar = document.createElementNS('http://www.w3.org/2000/svg',"g")
+            bar.setAttribute("class", "bar")
+            let rect = document.createElementNS('http://www.w3.org/2000/svg',"rect")
             rect.setAttribute("width", (item.amount).toFixed(1)/1000)
             
             rect.setAttribute("height", 19)
             rect.setAttribute("y", barHeight)
             
-            let text = document.createElement("text")
+            let text = document.createElementNS('http://www.w3.org/2000/svg', "text")
             text.setAttribute("x", (item.amount).toFixed(1)/1000 + 5 )
             text.setAttribute("y", barHeight + 19/2)
             text.setAttribute("dy", ".35em")
-            text.textContent = item.object.name
+            text.textContent = item.object.name + " " + item.amount / 1000 + "kb"
             barHeight += 20
             barWidth.toFixed(1)
             bar.append(rect)
             bar.append(text)
             barChart.append(bar)
-
-
         })
-
+        // displaying total XP
         profileTotalXpOutput[0].textContent += profileTotalXpData   
     });
 }

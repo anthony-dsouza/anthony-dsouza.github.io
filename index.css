@@ -51,7 +51,7 @@ body {
   }
   .bar:hover,
   .bar:focus {
-    fill: black;
+    fill: rgb(228, 12, 12);
   }
   .bar:hover text,
   .bar:focus text {
