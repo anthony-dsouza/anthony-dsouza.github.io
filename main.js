@@ -186,7 +186,11 @@ function showTransactionData() {
             text2.setAttribute("x", "10" )
             text2.setAttribute("y", "35")
             text2.style.display = "none"
-            text2.textContent = item.createdAt
+            let date = new Date(Date.parse(item.createdAt))
+            let day = date.getDate()
+            let month = date.getMonth() + 1
+            let year = date.getFullYear()
+            text2.textContent = day + "/" + month + "/" + year
             point.setAttribute("cx", (time/(1000*60*60*24*7)-2703)*6)
             point.setAttribute("cy", (320 - (profileTotalXpData/1000)/2))
             point.setAttribute("r", 4)
