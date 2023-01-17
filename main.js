@@ -4,11 +4,14 @@ let profileIdData
 let profileIdOutput = document.getElementsByClassName("profileId")
 let profileLastProjectData
 let profileLastProjectOutput = document.getElementsByClassName("profileLastProject")
-let profileTotalXpData = 0
 let profileTotalXpOutput = document.getElementsByClassName("profileTotalXp")
 let profileAverageGradeOutput = document.getElementsByClassName("profileAverageGrade")
 let barWidth = 0
 let barHeight = 0
+let lineWidth = 0
+let lineHeight = 0
+let points = ""
+
 
 
 function showProfileData() {
@@ -115,12 +118,13 @@ function showTransactionData() {
         query {
             transaction(
                 where: {_and: [{user: {id: {_eq: "125"}}}, {object: {type: {_eq: "project"}}}, {type: {_eq: "xp"}}]}
-                order_by: {amount: desc}
+                order_by: {createdAt: desc}
             ) {
                 amount
                 object {
                     name
                 }
+                createdAt
             }
             
         }
@@ -138,12 +142,14 @@ function showTransactionData() {
     }).then(response => {
         return response.json();
     }).then(data => {
-        // bar chart data showing amount of xp per project
+        let lineChart = document.getElementById("lineChart")
+        let circle = document.getElementById("circle")
+        let profileTotalXpData = 0
         data.data.transaction.forEach(item => {
 
             //used to find out total XP
             profileTotalXpData += item.amount
-
+            // bar chart data showing amount of xp per project
             let barChart = document.getElementById("barChart")
             let bar = document.createElementNS('http://www.w3.org/2000/svg',"g")
             bar.setAttribute("class", "bar")
@@ -163,7 +169,19 @@ function showTransactionData() {
             bar.append(rect)
             bar.append(text)
             barChart.append(bar)
+
+            //line graph showing xp earned over time
+
+            let time = Date.parse(item.createdAt)
+            // circle data point
+            let point = document.createElementNS('http://www.w3.org/2000/svg', "circle")
+            point.setAttribute("cx", (time/(1000*60*60*24*7)-2703)*6)
+            point.setAttribute("cy", (profileTotalXpData/1000)/2)
+            circle.append(point)
+            points += (time/(1000*60*60*24*7)-2703)*6 + ", " + (profileTotalXpData/1000)/2 + " "
         })
+        // appending points attribute to ployfill
+        lineChart.setAttribute("points", points)
         // displaying total XP
         profileTotalXpOutput[0].textContent += profileTotalXpData   
     });
@@ -172,3 +190,6 @@ function showTransactionData() {
 showProfileData()
 showProgressData()
 showTransactionData()
+
+// things to do
+// -- take out duplicate data

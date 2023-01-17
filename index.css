@@ -29,6 +29,23 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.graphs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+}
+
+.graphs div {
+  background-color: azure;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 5px;
+  max-height: 420px;
+  overflow: scroll;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .profile div h2 {
    text-align: center;
 }
