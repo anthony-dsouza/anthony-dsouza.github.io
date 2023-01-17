@@ -177,6 +177,8 @@ function showTransactionData() {
             let point = document.createElementNS('http://www.w3.org/2000/svg', "circle")
             point.setAttribute("cx", (time/(1000*60*60*24*7)-2703)*6)
             point.setAttribute("cy", (profileTotalXpData/1000)/2)
+            point.setAttribute("r", 4)
+            point.style.
             circle.append(point)
             points += (time/(1000*60*60*24*7)-2703)*6 + ", " + (profileTotalXpData/1000)/2 + " "
         })
