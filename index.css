@@ -80,3 +80,7 @@ body {
     color: #000;
     margin-bottom: 20px;
   }
+
+  circle:hover {
+      fill: rgb(228, 12, 12); 
+  }

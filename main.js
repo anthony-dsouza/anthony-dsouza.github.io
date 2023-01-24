@@ -205,7 +205,7 @@ function showTransactionData() {
             text1.setAttribute("x", "10" )
             text1.setAttribute("y", "10")
             text1.style.display = "none"
-            text1.textContent = profileTotalXpData/1000 + "kb " + key 
+            text1.textContent = profileTotalXpData/1000 + "kb "
             text2.setAttribute("dy", ".35em")
             text2.setAttribute("x", "10" )
             text2.setAttribute("y", "35")
@@ -231,7 +231,7 @@ function showTransactionData() {
             circle.append(text2)
             points += (time/(1000*60*60*24*7)-2703)*6 + ", " + (320 - (profileTotalXpData/1000)/2) + " "
         })
-        console.log(projectMap)
+        
         // appending points attribute to ployfill
         lineChart.setAttribute("points", points)
         // displaying total XP
