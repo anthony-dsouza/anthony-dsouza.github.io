@@ -3,45 +3,51 @@ body {
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
     justify-content: center;
     
 }
 
-.profile {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
+#completedProjects {
+  background-color: azure;
+  border-radius: 1%;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  padding: 1%;
+  max-height: 20vh;
+  overflow: scroll;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
 }
 
-.profile div {
-    background-color: azure;
-    border-radius: 10px;
-    margin: 5px;
-    padding: 5px;
-    max-height: 210px;
-    overflow-y: scroll;
-    overflow-x: scroll;
-    min-width: 200px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.profile {
+  background-color: azure;
+  border-radius: 1%;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  padding: 1%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
 }
 
 .graphs {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 
 .graphs div {
+  display: flex;
   background-color: azure;
-  border-radius: 10px;
-  margin: 5px;
-  padding: 5px;
-  max-height: 420px;
+  border-radius: 1%;
+  margin: 1%;
   overflow: scroll;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -50,13 +56,6 @@ body {
    text-align: center;
 }
 
-/* .bar {
-    fill: red;
-    height: 21px;
-    transition: fill .3s ease;
-    cursor: pointer;
-    font-family: Helvetica, sans-serif;
-  } */
   .bar text {
     color: black;
   }
@@ -72,7 +71,6 @@ body {
   figcaption {
     font-weight: bold;
     color: #000;
-    margin-bottom: 20px;
   }
 
   circle:hover {
