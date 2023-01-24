@@ -11,7 +11,7 @@ let barHeight = 0
 let lineWidth = 0
 let lineHeight = 0
 let points = ""
-
+let projectMap = new Map()
 
 
 function showProfileData() {
@@ -53,10 +53,12 @@ function showProgressData() {
                 where: {_and: [{user: {id: {_eq: "125"}}}, {object: {type: {_eq: "project"}}}, {isDone: {_eq: true}}, {grade: {_neq: 0}}]}
                 order_by: {updatedAt: desc}
             ) {
+                id
                 grade
                 createdAt
                 updatedAt
                 object {
+                    id
                     name
                 }
             }
@@ -122,6 +124,7 @@ function showTransactionData() {
             ) {
                 amount
                 object {
+                    id
                     name
                 }
                 createdAt
@@ -142,28 +145,49 @@ function showTransactionData() {
     }).then(response => {
         return response.json();
     }).then(data => {
+        
+        
+        data.data.transaction.forEach(item => {
+
+            // check if project name is in projectMap
+
+            if (projectMap.has(item.object.name)) {
+                // take latest date
+                if (projectMap.get(item.object.name)[1] < item.createdAt) {
+                    projectMap.set(item.object.name, [projectMap.get(item.object.name)[0] + item.amount, projectMap.get(item.object.name)[1]]) 
+                } else {
+                    projectMap.set(item.object.name, [projectMap.get(item.object.name)[0] + item.amount, item.createdAt]) 
+                }
+                
+                
+            } else {
+                projectMap.set(item.object.name, [item.amount, item.createdAt]) 
+            } 
+        })
+
         let lineChart = document.getElementById("lineChart")
         let circle = document.getElementById("circle")
         let profileTotalXpData = 0
-        data.data.transaction.forEach(item => {
 
+        projectMap.forEach((item, key) => {
+            
             //used to find out total XP
-            profileTotalXpData += item.amount
+            profileTotalXpData += item[0]
             // bar chart data showing amount of xp per project
             let barChart = document.getElementById("barChart")
             let bar = document.createElementNS('http://www.w3.org/2000/svg',"g")
             bar.setAttribute("class", "bar")
             let rect = document.createElementNS('http://www.w3.org/2000/svg',"rect")
-            rect.setAttribute("width", (item.amount).toFixed(1)/1000)
+            rect.setAttribute("width", (item[0]).toFixed(1)/1000)
             
             rect.setAttribute("height", 19)
             rect.setAttribute("y", barHeight)
             
             let text = document.createElementNS('http://www.w3.org/2000/svg', "text")
-            text.setAttribute("x", (item.amount).toFixed(1)/1000 + 5 )
+            text.setAttribute("x", (item[0]).toFixed(1)/1000 + 5 )
             text.setAttribute("y", barHeight + 19/2)
             text.setAttribute("dy", ".35em")
-            text.textContent = item.object.name + " " + item.amount / 1000 + "kb"
+            text.textContent = key + " " + item[0] / 1000 + "kb"
             barHeight += 20
             barWidth.toFixed(1)
             bar.append(rect)
@@ -172,7 +196,7 @@ function showTransactionData() {
 
             //line graph showing xp earned over time
 
-            let time = Date.parse(item.createdAt)
+            let time = Date.parse(item[1])
             // circle data point
             let point = document.createElementNS('http://www.w3.org/2000/svg', "circle")
             let text1 = document.createElementNS('http://www.w3.org/2000/svg', "text")
@@ -181,12 +205,12 @@ function showTransactionData() {
             text1.setAttribute("x", "10" )
             text1.setAttribute("y", "10")
             text1.style.display = "none"
-            text1.textContent = profileTotalXpData/1000 + "kb " + item.object.name 
+            text1.textContent = profileTotalXpData/1000 + "kb " + key 
             text2.setAttribute("dy", ".35em")
             text2.setAttribute("x", "10" )
             text2.setAttribute("y", "35")
             text2.style.display = "none"
-            let date = new Date(Date.parse(item.createdAt))
+            let date = new Date(Date.parse(item[1]))
             let day = date.getDate()
             let month = date.getMonth() + 1
             let year = date.getFullYear()
@@ -207,16 +231,19 @@ function showTransactionData() {
             circle.append(text2)
             points += (time/(1000*60*60*24*7)-2703)*6 + ", " + (320 - (profileTotalXpData/1000)/2) + " "
         })
+        console.log(projectMap)
         // appending points attribute to ployfill
         lineChart.setAttribute("points", points)
         // displaying total XP
-        profileTotalXpOutput[0].textContent += profileTotalXpData   
+        profileTotalXpOutput[0].textContent += profileTotalXpData
     });
 }
+
+
 
 showProfileData()
 showProgressData()
 showTransactionData()
-
+   
 // things to do
 // -- take out duplicate data
