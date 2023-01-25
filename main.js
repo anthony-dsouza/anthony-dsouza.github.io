@@ -235,7 +235,7 @@ function showTransactionData() {
         // appending points attribute to ployfill
         lineChart.setAttribute("points", points)
         // displaying total XP
-        profileTotalXpOutput[0].textContent += profileTotalXpData
+        profileTotalXpOutput[0].textContent += profileTotalXpData/1000 + "kb"
     });
 }
 
