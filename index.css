@@ -59,7 +59,11 @@ body {
   .bar text {
     color: black;
   }
-
+  
+  .bar:hover {
+    fill: rgb(228, 12, 12);
+  }
+  
   .bar text:hover {
     fill: rgb(228, 12, 12);
     translate: 10%;
@@ -75,4 +79,10 @@ body {
 
   circle:hover {
       fill: rgb(228, 12, 12);
+  }
+
+  @media (max-width:600px) {
+    .graphs {
+      display: block;
+    }
   }
